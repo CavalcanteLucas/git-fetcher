@@ -15,7 +15,7 @@ body {
   font-family: "Roboto", sans-serif;
   color: $black;
   background: $white;
-  padding: 0 1em 1em;
+  margin: 0;
   min-width: 600px;
 }
 
@@ -70,6 +70,46 @@ button {
   }
 }
 
+input {
+  background: white;
+  border-radius: 15px;
+  border-width: thin;
+  height: 2rem;
+}
+
+input[type="text"] {
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  background-image: url('./assets/magnifying_glass.png');
+  background-position: 10px 10px; 
+  background-size: 1rem;
+  background-repeat: no-repeat;
+  text-indent: 20px;
+}
+
+.app-frame {
+  padding-top: 2.5rem;
+  margin: 2rem;
+}
+
+.app-main-msg-frame{
+  padding-top: 2rem;
+}
+
+.header-frame {
+  background-color: lighten($oslogray, 34%);
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.magnifying-glass-img {
+  transform: rotate(270deg);
+  width: 24px;
+}
+
 .repo-btn {
   font-size: 32px;
 }
@@ -77,18 +117,17 @@ button {
 .repo-list-frame, .branch-list-frame, .commit-list-frame {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
-  border-style: solid;
   border-width: thin;
   padding: 0 1rem 1rem 1rem;
   margin: 0 1rem 1.5rem 1rem;
 }
 
 .repo-list-frame {
-  background-color: lighten($iron, 8%);
+  background-color: lighten($colonialwhite, 12%);
 }
 
 .branch-list-frame {
-  background-color: lighten($loblolly, 8%);
+  background-color: lighten($corvette, 8%);
 }
 
 .repo-list-pg-btn-frame, .branch-list-pg-btn-frame, .commit-list-pg-btn-frame {
@@ -100,6 +139,14 @@ button {
   padding-bottom: 1rem;
 }
 
+.repo-list-pg-loading-frame {
+  padding-left: 1rem;
+}
+
+.branch-list-pg-loading-frame {
+  padding-left: 1rem;
+}
+
 .prev-pg-btn, .next-pg-btn {
   font-size: 48px;
 }
@@ -109,5 +156,30 @@ button {
 }
 
 .commit-list-frame {
-  background-color: lighten($oslogray, 8%);
+  background-color: lighten($apricot, 8%);
+  padding-top: 0.1rem;
+}
+
+.loader {
+  border: 6px solid $iron; /* Light grey */
+  border-top: 6px solid $apricot; /* Blue */
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-frame {
+  display: flex;
+  align-items: center;
+}
+
+.loading-spinner-frame {
+  padding-right: 1rem;
+  padding-left: 1rem;
 }

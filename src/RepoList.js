@@ -79,38 +79,51 @@ export default function RepoList({ username }) {
     return (
       <>
         <h1>{username.toUpperCase()}</h1>
-        {errRepos && <h2>{errRepos}</h2>}
-        {isLoadingRepos && <h2>Loading...</h2>}
-        {!errRepos && !isLoadingRepos && (
-          <div className="repo-list-pg-btn-frame">
-            <button
-              className={"prev-pg-btn"}
-              disabled={isFirstPage()}
-              onClick={() => {
-                handlerPrevPgBtn();
-              }}
-            >
-              ⬅
-            </button>
-            <h2>
-              {currentPage} | {lastPage}
-            </h2>
-            <button
-              className="next-pg-btn"
-              disabled={isLastPage()}
-              onClick={() => {
-                handlerNextPgBtn();
-              }}
-            >
-              ➡
-            </button>
+        {!errRepos && !isLoadingRepos ? (
+          <>
+            <div className="repo-list-pg-btn-frame">
+              <button
+                className={"prev-pg-btn"}
+                disabled={isFirstPage()}
+                onClick={() => {
+                  handlerPrevPgBtn();
+                }}
+              >
+                ⬅
+              </button>
+              <h2>
+                {currentPage} | {lastPage}
+              </h2>
+              <button
+                className="next-pg-btn"
+                disabled={isLastPage()}
+                onClick={() => {
+                  handlerNextPgBtn();
+                }}
+              >
+                ➡
+              </button>
+            </div>
+            <div className="repo-list-frame">
+              {repos.map((repo) => {
+                return <Repo key={repo.id} repo={repo} username={username} />;
+              })}
+            </div>
+          </>
+        ) : (
+          <div className="repo-list-pg-btn-frame repo-list-pg-loading-frame">
+            {errRepos && <h2>{errRepos}</h2>}
+            {isLoadingRepos && (
+              <span className="loading-frame">
+                <div className="loading-spinner-frame">
+                  <div className="loader"></div>
+                </div>
+
+                <h2>Loading...</h2>
+              </span>
+            )}
           </div>
         )}
-        <div className="repo-list-frame">
-          {repos.map((repo) => {
-            return <Repo key={repo.id} repo={repo} username={username} />;
-          })}
-        </div>
       </>
     );
   else return null;

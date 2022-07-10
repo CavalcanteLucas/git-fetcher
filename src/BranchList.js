@@ -77,47 +77,60 @@ export default function BranchList({ reponame, username }) {
 
   useEffect(getBranches, [currentPage, reponame, username]);
 
-  if (!branches) return null;
+  if (branches)
+    return (
+      <>
+        {!errBranches && !isLoadingBranches ? (
+          <>
+            <div className="branch-list-pg-btn-frame">
+              <button
+                disabled={isFirstPage()}
+                onClick={() => {
+                  handlerPrevPgBtn();
+                }}
+              >
+                ⬅
+              </button>
+              <h3>
+                {currentPage} | {lastPage}
+              </h3>
+              <button
+                disabled={isLastPage()}
+                onClick={() => {
+                  handlerNextPgBtn();
+                }}
+              >
+                ➡
+              </button>
+            </div>
+            <div className="branch-list-frame">
+              {branches.map((branch) => {
+                return (
+                  <Branch
+                    key={branch.commit.sha}
+                    branch={branch}
+                    username={username}
+                    reponame={reponame}
+                  ></Branch>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <div className="branch-list-pg-btn-frame ">
+            {errBranches && <h3>{errBranches}</h3>}
+            {isLoadingBranches && (
+              <span className="loading-frame branch-list-pg-loading-frame">
+                <div className="loading-spinner-frame">
+                  <div className="loader"></div>
+                </div>
 
-  return (
-    <>
-      {errBranches && <h3>{errBranches}</h3>}
-      {isLoadingBranches && <h3>Loading...</h3>}
-      {
-        <div className="branch-list-pg-btn-frame">
-          <button
-            disabled={isFirstPage()}
-            onClick={() => {
-              handlerPrevPgBtn();
-            }}
-          >
-            ⬅
-          </button>
-          <h3>
-            {currentPage} | {lastPage}
-          </h3>
-          <button
-            disabled={isLastPage()}
-            onClick={() => {
-              handlerNextPgBtn();
-            }}
-          >
-            ➡
-          </button>
-        </div>
-      }
-      <div className="branch-list-frame">
-        {branches.map((branch) => {
-          return (
-            <Branch
-              key={branch.commit.sha}
-              branch={branch}
-              username={username}
-              reponame={reponame}
-            ></Branch>
-          );
-        })}
-      </div>
-    </>
-  );
+                <h3>Loading...</h3>
+              </span>
+            )}
+          </div>
+        )}
+      </>
+    );
+  else return null;
 }

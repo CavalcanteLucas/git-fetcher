@@ -19,14 +19,13 @@ export default function Repo({ repo, username }) {
       <div className="repo-title">
         <h2>{repo.name.toUpperCase()}</h2>
         <button className={btnRotatedCls} onClick={handleShowBranches}>
-        ➤
+          ➤
         </button>
       </div>
 
       {showBranches ? (
         <BranchList reponame={repo.name} username={username} />
       ) : null}
-      <hr />
     </>
   );
 }

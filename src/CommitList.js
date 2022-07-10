@@ -78,47 +78,61 @@ export default function CommitList({ branchname, username, reponame }) {
 
   useEffect(getCommits, [branchname, currentPage, reponame, username]);
 
-  if (!commits) return null;
+  if (commits)
+    return (
+      <>
+        {!errCommits && !isLoadingCommits ? (
+          <>
+            <div className="commit-list-pg-btn-frame">
+              <button
+                disabled={isFirstPage()}
+                onClick={() => {
+                  handlerPrevPgBtn();
+                }}
+              >
+                ⬅
+              </button>
+              <p>
+                {currentPage} | {lastPage}
+              </p>
+              <button
+                disabled={isLastPage()}
+                onClick={() => {
+                  handlerNextPgBtn();
+                }}
+              >
+                ➡
+              </button>
+            </div>
+            <div className="commit-list-frame">
+              {commits.map((commit) => {
+                return (
+                  <Commit
+                    key={commit.sha}
+                    commit={commit}
+                    username={username}
+                    reponame={reponame}
+                  ></Commit>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <div className="">
+            {errCommits && <h2>{errCommits}</h2>}
+            {isLoadingCommits && (
+              <span className="loading-frame">
+                <div className="loading-spinner-frame">
+                  <div className="loader"></div>
+                </div>
 
-  return (
-    <>
-      {errCommits && <h4>{errCommits}</h4>}
-      {isLoadingCommits && <h4>Loading...</h4>}
-      {
-        <div className="commit-list-pg-btn-frame">
-          <button
-            disabled={isFirstPage()}
-            onClick={() => {
-              handlerPrevPgBtn();
-            }}
-          >
-            ⬅
-          </button>
-          <p>
-            {currentPage} | {lastPage}
-          </p>
-          <button
-            disabled={isLastPage()}
-            onClick={() => {
-              handlerNextPgBtn();
-            }}
-          >
-            ➡
-          </button>
-        </div>
-      }
-      <div className="commit-list-frame">
-        {commits.map((commit) => {
-          return (
-            <Commit
-              key={commit.sha}
-              commit={commit}
-              username={username}
-              reponame={reponame}
-            ></Commit>
-          );
-        })}
-      </div>
-    </>
-  );
+                <p>Loading...</p>
+              </span>
+            )}
+          </div>
+        )}
+        {}
+      </>
+    );
+  else return null;
 }
