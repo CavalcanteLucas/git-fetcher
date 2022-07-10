@@ -90,15 +90,13 @@ button {
   background-color: lighten($loblolly, 8%);
 }
 
-.repo-list-pg-btn-frame {
-  padding-bottom: 1rem;
+.repo-list-pg-btn-frame, .branch-list-pg-btn-frame, .commit-list-pg-btn-frame {
   display: flex;
   align-items: center;
 }
 
-.branch-list-pg-btn-frame {
-  display: flex;
-  align-items: center;
+.repo-list-pg-btn-frame {
+  padding-bottom: 1rem;
 }
 
 .prev-pg-btn, .next-pg-btn {
