@@ -9,6 +9,7 @@ export default function BranchList({ reponame, username }) {
 
   const getBranches = () => {
     setIsLoadingBranches(true);
+    setErrBranches("");
     axios
       .get(`https://api.github.com/repos/${username}/${reponame}/branches`, {
         headers: {
@@ -33,7 +34,7 @@ export default function BranchList({ reponame, username }) {
     setBranches(branches);
   };
 
-  useEffect(mockUpdateBranches, []);
+  useEffect(getBranches, [reponame, username]);
 
   if (!branches) return null;
 

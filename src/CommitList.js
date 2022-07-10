@@ -9,6 +9,7 @@ export default function CommitList({ branchname, username, reponame }) {
 
   const getCommits = () => {
     setIsLoadingCommits(true);
+    setErrCommits("");
     axios
       .get(`https://api.github.com/repos/${username}/${reponame}/commits`, {
         headers: {
@@ -33,7 +34,7 @@ export default function CommitList({ branchname, username, reponame }) {
     setCommits(commits);
   };
 
-  useEffect(mockUpdateCommits, []);
+  useEffect(getCommits, [reponame, username]);
 
   if (!commits) return null;
 

@@ -9,6 +9,7 @@ export default function RepoList({ username }) {
 
   const getRepos = () => {
     setIsLoadingRepos(true);
+    setErrRepos("");
     axios
       .get(`https://api.github.com/users/${username}/repos`, {
         headers: {
@@ -22,6 +23,7 @@ export default function RepoList({ username }) {
       .catch((error) => {
         console.log(error);
         setErrRepos(error.message);
+        setRepos([]);
       })
       .finally(() => {
         setIsLoadingRepos(false);
@@ -33,24 +35,18 @@ export default function RepoList({ username }) {
     setRepos(json);
   };
 
-  useEffect(mockUpdateRepos, []);
+  useEffect(getRepos, [username]);
 
-  if (!repos) return null;
-
-  return (
-    <>
-      <h1>{username.toUpperCase()}</h1>
-      {errRepos && <h2>{errRepos}</h2>}
-      {isLoadingRepos && <h2>Loading...</h2>}
-      {repos.map((repo) => {
-        console.log(repo.id);
-        return (
-          <>
-            <Repo key={repo.id} repo={repo} username={username} />
-            <hr />
-          </>
-        );
-      })}
-    </>
-  );
+  if (repos)
+    return (
+      <>
+        <h1>{username.toUpperCase()}</h1>
+        {errRepos && <h2>{errRepos}</h2>}
+        {isLoadingRepos && <h2>Loading...</h2>}
+        {repos.map((repo) => {
+          return <Repo key={repo.id} repo={repo} username={username} />;
+        })}
+      </>
+    );
+  else return null;
 }

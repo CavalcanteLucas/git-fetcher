@@ -8,12 +8,11 @@ export default function Repo({ repo, username }) {
 
   const [showBranches, setShowBranches] = useState(initialState.showBranches);
 
-
   function handleShowBranches(e) {
     setShowBranches(!showBranches);
   }
 
-  const btnRotatedCls = 'repo-btn' + (showBranches ? ' btn-rotated' : '');
+  const btnRotatedCls = "repo-btn" + (showBranches ? " btn-rotated" : "");
 
   return (
     <>
@@ -27,6 +26,7 @@ export default function Repo({ repo, username }) {
       {showBranches ? (
         <BranchList reponame={repo.name} username={username} />
       ) : null}
+      <hr />
     </>
   );
 }
