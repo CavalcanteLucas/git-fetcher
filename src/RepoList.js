@@ -39,8 +39,7 @@ export default function RepoList({ username }) {
             .match('"(.*)"')[1];
 
           if (paginationRel === "last") {
-            const lastPage = paginationURL
-              .match(/&page=(\d+).*$/)[1];
+            const lastPage = paginationURL.match(/&page=(\d+).*$/)[1];
             setLastPage(parseInt(lastPage));
           }
 
@@ -65,12 +64,12 @@ export default function RepoList({ username }) {
   };
 
   const isFirstPage = () => {
-    return currentPage === 1
-  }
+    return currentPage === 1;
+  };
 
   const isLastPage = () => {
     return currentPage === lastPage;
-  }
+  };
 
   useEffect(getRepos, [currentPage, username]);
 
@@ -78,12 +77,10 @@ export default function RepoList({ username }) {
     return (
       <>
         <h1>{username.toUpperCase()}</h1>
-        <>
-          {errRepos && <h2>{errRepos}</h2>}
-          {isLoadingRepos && <h2>Loading...</h2>}
-        </>
+        {errRepos && <h2>{errRepos}</h2>}
+        {isLoadingRepos && <h2>Loading...</h2>}
         {!errRepos && !isLoadingRepos && (
-          <div className="pg-btn-frame">
+          <div className="repo-list-pg-btn-frame">
             <button
               className={"prev-pg-btn"}
               disabled={isFirstPage()}
@@ -107,9 +104,11 @@ export default function RepoList({ username }) {
             </button>
           </div>
         )}
-        {repos.map((repo) => {
-          return <Repo key={repo.id} repo={repo} username={username} />;
-        })}
+        <div className="repo-list-frame">
+          {repos.map((repo) => {
+            return <Repo key={repo.id} repo={repo} username={username} />;
+          })}
+        </div>
       </>
     );
   else return null;

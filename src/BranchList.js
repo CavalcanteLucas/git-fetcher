@@ -7,16 +7,22 @@ export default function BranchList({ reponame, username }) {
   const [isLoadingBranches, setIsLoadingBranches] = useState(false);
   const [errBranches, setErrBranches] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+
   const getBranches = () => {
     setBranches([]);
     setIsLoadingBranches(true);
     setErrBranches("");
     axios
-      .get(`https://api.github.com/repos/${username}/${reponame}/branches`, {
-        headers: {
-          Authorization: `token ${process.env.REACT_APP_GIT_TOKEN}`,
-        },
-      })
+      .get(
+        `https://api.github.com/repos/${username}/${reponame}/branches?per_page=10&page=${currentPage}`,
+        {
+          headers: {
+            Authorization: `token ${process.env.REACT_APP_GIT_TOKEN}`,
+          },
+        }
+      )
       .then((response) => {
         setBranches(response.data);
         setErrBranches("");
@@ -29,7 +35,7 @@ export default function BranchList({ reponame, username }) {
       });
   };
 
-  useEffect(getBranches, [reponame, username]);
+  useEffect(getBranches, [currentPage, reponame, username]);
 
   if (!branches) return null;
 
@@ -37,16 +43,27 @@ export default function BranchList({ reponame, username }) {
     <>
       {errBranches && <h3>{errBranches}</h3>}
       {isLoadingBranches && <h3>Loading...</h3>}
-      {branches.map((branch) => {
-        return (
-          <Branch
-            key={branch.commit.sha}
-            branch={branch}
-            username={username}
-            reponame={reponame}
-          ></Branch>
-        );
-      })}
+      {
+        <div className="branch-list-pg-btn-frame">
+          <button>⬅</button>
+          <h3>
+            {currentPage} | {lastPage}
+          </h3>
+          <button>➡</button>
+        </div>
+      }
+      <div className="branch-list-frame">
+        {branches.map((branch) => {
+          return (
+            <Branch
+              key={branch.commit.sha}
+              branch={branch}
+              username={username}
+              reponame={reponame}
+            ></Branch>
+          );
+        })}
+      </div>
     </>
   );
 }

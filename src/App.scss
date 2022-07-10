@@ -11,8 +11,6 @@ $oslogray: #90969A;
 $outerspace: #1F282C;
 $charade: #0D0D0E;
 
-
-
 body {
   font-family: "Roboto", sans-serif;
   color: $black;
@@ -50,6 +48,15 @@ p {
   align-items: center;
 }
 
+a {
+  color: $charade;
+  cursor: pointer;
+}
+
+a:hover {
+  color: $colonialwhite;
+}
+
 button {
   all: unset;
   padding-left: 1rem;
@@ -66,8 +73,30 @@ button {
   font-size: 32px;
 }
 
-.pg-btn-frame {
+.repo-list-frame, .branch-list-frame, .commit-list-frame {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  border-style: solid;
+  border-width: thin;
+  padding: 0 1rem 1rem 1rem;
+  margin: 0 1rem 1.5rem 1rem;
+}
+
+.repo-list-frame {
+  background-color: lighten($iron, 8%);
+}
+
+.branch-list-frame {
+  background-color: lighten($loblolly, 8%);
+}
+
+.repo-list-pg-btn-frame {
   padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.branch-list-pg-btn-frame {
   display: flex;
   align-items: center;
 }
@@ -81,9 +110,5 @@ button {
 }
 
 .commit-list-frame {
-  border-style: solid;
-  border-width: thin;
-  padding: 0 1rem 1rem 1rem;
-  margin: 0 1rem 1.5rem 1rem;
-  background-color: lighten($iron, 8%);
+  background-color: lighten($oslogray, 8%);
 }
