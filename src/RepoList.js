@@ -28,23 +28,25 @@ export default function RepoList({ username }) {
         setErrRepos("");
 
         const headerLink = response.headers.link;
-        const paginationLinks = headerLink.split(", ");
+        if (headerLink) {
+          const paginationLinks = headerLink.split(", ");
 
-        paginationLinks.map((paginationLink) => {
-          const paginationURL = paginationLink
-            .split("; ")[0]
-            .match("<(.*)>")[1];
-          const paginationRel = paginationLink
-            .split("; ")[1]
-            .match('"(.*)"')[1];
+          paginationLinks.map((paginationLink) => {
+            const paginationURL = paginationLink
+              .split("; ")[0]
+              .match("<(.*)>")[1];
+            const paginationRel = paginationLink
+              .split("; ")[1]
+              .match('"(.*)"')[1];
 
-          if (paginationRel === "last") {
-            const lastPage = paginationURL.match(/&page=(\d+).*$/)[1];
-            setLastPage(parseInt(lastPage));
-          }
+            if (paginationRel === "last") {
+              const lastPage = paginationURL.match(/&page=(\d+).*$/)[1];
+              setLastPage(parseInt(lastPage));
+            }
 
-          return null;
-        });
+            return null;
+          });
+        }
       })
       .catch((error) => {
         setErrRepos(error.message);
@@ -94,7 +96,7 @@ export default function RepoList({ username }) {
               {currentPage} | {lastPage}
             </h2>
             <button
-              className={"next-pg-btn"}
+              className="next-pg-btn"
               disabled={isLastPage()}
               onClick={() => {
                 handlerNextPgBtn();

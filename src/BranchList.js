@@ -26,6 +26,30 @@ export default function BranchList({ reponame, username }) {
       .then((response) => {
         setBranches(response.data);
         setErrBranches("");
+
+        const headerLink = response.headers.link;
+
+        if (headerLink) {
+          const paginationLinks = headerLink.split(", ");
+
+          paginationLinks.map((paginationLink) => {
+            console.log(paginationLink);
+
+            const paginationURL = paginationLink
+              .split("; ")[0]
+              .match("<(.*)>")[1];
+            const paginationRel = paginationLink
+              .split("; ")[1]
+              .match('"(.*)"')[1];
+
+            if (paginationRel === "last") {
+              const lastPage = paginationURL.match(/&page=(\d+).*$/)[1];
+              setLastPage(parseInt(lastPage));
+            }
+
+            return null;
+          });
+        }
       })
       .catch((error) => {
         setErrBranches(error.message);
@@ -33,6 +57,22 @@ export default function BranchList({ reponame, username }) {
       .finally(() => {
         setIsLoadingBranches(false);
       });
+  };
+
+  const handlerNextPgBtn = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlerPrevPgBtn = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const isFirstPage = () => {
+    return currentPage === 1;
+  };
+
+  const isLastPage = () => {
+    return currentPage === lastPage;
   };
 
   useEffect(getBranches, [currentPage, reponame, username]);
@@ -45,11 +85,25 @@ export default function BranchList({ reponame, username }) {
       {isLoadingBranches && <h3>Loading...</h3>}
       {
         <div className="branch-list-pg-btn-frame">
-          <button>⬅</button>
+          <button
+            disabled={isFirstPage()}
+            onClick={() => {
+              handlerPrevPgBtn();
+            }}
+          >
+            ⬅
+          </button>
           <h3>
             {currentPage} | {lastPage}
           </h3>
-          <button>➡</button>
+          <button
+            disabled={isLastPage()}
+            onClick={() => {
+              handlerNextPgBtn();
+            }}
+          >
+            ➡
+          </button>
         </div>
       }
       <div className="branch-list-frame">

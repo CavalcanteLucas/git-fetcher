@@ -60,24 +60,54 @@ export default function CommitList({ branchname, username, reponame }) {
       });
   };
 
+  const handlerNextPgBtn = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlerPrevPgBtn = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const isFirstPage = () => {
+    return currentPage === 1;
+  };
+
+  const isLastPage = () => {
+    return currentPage === lastPage;
+  };
+
   useEffect(getCommits, [branchname, currentPage, reponame, username]);
 
   if (!commits) return null;
 
   return (
     <>
+      {errCommits && <h4>{errCommits}</h4>}
+      {isLoadingCommits && <h4>Loading...</h4>}
+      {
+        <div className="commit-list-pg-btn-frame">
+          <button
+            disabled={isFirstPage()}
+            onClick={() => {
+              handlerPrevPgBtn();
+            }}
+          >
+            ⬅
+          </button>
+          <p>
+            {currentPage} | {lastPage}
+          </p>
+          <button
+            disabled={isLastPage()}
+            onClick={() => {
+              handlerNextPgBtn();
+            }}
+          >
+            ➡
+          </button>
+        </div>
+      }
       <div className="commit-list-frame">
-        {errCommits && <h4>{errCommits}</h4>}
-        {isLoadingCommits && <h4>Loading...</h4>}
-        {
-          <div className="commit-list-pg-btn-frame">
-            <button>⬅</button>
-            <h3>
-              {currentPage} | {lastPage}
-            </h3>
-            <button>➡</button>
-          </div>
-        }
         {commits.map((commit) => {
           return <Commit key={commit.sha} commit={commit}></Commit>;
         })}
