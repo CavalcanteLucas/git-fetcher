@@ -12,14 +12,14 @@ export default function Repo({ repo, username }) {
     setShowBranches(!showBranches);
   }
 
-  const btnRotatedCls = "repo-btn" + (showBranches ? " btn-rotated" : "");
+  const btnRotatedCls = "repo-btn" + (showBranches ? " btn-rotated-90" : "");
 
   return (
     <>
       <div className="repo-title">
         <h2>{repo.name.toUpperCase()}</h2>
         <button className={btnRotatedCls} onClick={handleShowBranches}>
-          ›
+        ➤
         </button>
       </div>
 

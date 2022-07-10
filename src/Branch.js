@@ -12,14 +12,14 @@ export default function Branch({ branch, username, reponame }) {
     setShowCommits(!showCommits);
   }
 
-  const btnRotatedCls = "branch-btn" + (showCommits ? ' btn-rotated' : '');
+  const btnRotatedCls = "branch-btn" + (showCommits ? " btn-rotated-90" : "");
 
   return (
     <>
       <div className="branch-title">
         <h3>{branch.name}</h3>
         <button className={btnRotatedCls} onClick={handleShowCommits}>
-          ›
+        ➤
         </button>
       </div>
       {showCommits ? (

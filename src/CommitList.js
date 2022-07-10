@@ -8,20 +8,21 @@ export default function CommitList({ branchname, username, reponame }) {
   const [errCommits, setErrCommits] = useState("");
 
   const getCommits = () => {
+    setCommits([]);
     setIsLoadingCommits(true);
     setErrCommits("");
     axios
-      .get(`https://api.github.com/repos/${username}/${reponame}/commits`, {
+      .get(`https://api.github.com/repos/${username}/${reponame}/commits\?sha=${branchname}`, {
         headers: {
           Authorization: `token ${process.env.REACT_APP_GIT_TOKEN}`,
         },
       })
       .then((response) => {
+        console.log(response.data);
         setCommits(response.data);
         setErrCommits("");
       })
       .catch((error) => {
-        console.log(error);
         setErrCommits(error.message);
       })
       .finally(() => {
@@ -29,12 +30,7 @@ export default function CommitList({ branchname, username, reponame }) {
       });
   };
 
-  const mockUpdateCommits = () => {
-    let commits = require("./samples/commitsSample.json");
-    setCommits(commits);
-  };
-
-  useEffect(getCommits, [reponame, username]);
+  useEffect(getCommits, [branchname, reponame, username]);
 
   if (!commits) return null;
 

@@ -8,6 +8,7 @@ export default function BranchList({ reponame, username }) {
   const [errBranches, setErrBranches] = useState("");
 
   const getBranches = () => {
+    setBranches([]);
     setIsLoadingBranches(true);
     setErrBranches("");
     axios
@@ -21,17 +22,11 @@ export default function BranchList({ reponame, username }) {
         setErrBranches("");
       })
       .catch((error) => {
-        console.log(error);
         setErrBranches(error.message);
       })
       .finally(() => {
         setIsLoadingBranches(false);
       });
-  };
-
-  const mockUpdateBranches = () => {
-    let branches = require("./samples/branchesSample.json");
-    setBranches(branches);
   };
 
   useEffect(getBranches, [reponame, username]);
@@ -45,7 +40,7 @@ export default function BranchList({ reponame, username }) {
       {branches.map((branch) => {
         return (
           <Branch
-            key={branch.commit}
+            key={branch.commit.sha}
             branch={branch}
             username={username}
             reponame={reponame}

@@ -54,6 +54,7 @@ button {
   all: unset;
   padding-left: 1rem;
   padding-right: 1rem;
+  color: $outerspace;
 
   &:hover {
     color: $apricot;
@@ -65,11 +66,17 @@ button {
   font-size: 32px;
 }
 
-.branch-btn {
-  font-size: 24px;
+.pg-btn-frame {
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-.btn-rotated {
+.prev-pg-btn, .next-pg-btn {
+  font-size: 48px;
+}
+
+.btn-rotated-90 {
   transform: rotate(90deg);
 }
 
