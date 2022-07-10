@@ -1,0 +1,82 @@
+$apricot: #F4A27E;
+$apricotpeach: #F9C29D;
+$corvette: #FCD4A4;
+$colonialwhite: #FFE6AB;
+
+$black: #000000;
+$white: #FFFFFF;
+$iron: #DADFE2;
+$loblolly: #BEC8CE;
+$oslogray: #90969A;
+$outerspace: #1F282C;
+$charade: #0D0D0E;
+
+
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: $black;
+  background: $white;
+  padding: 0 1em 1em;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+  color: $outerspace;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: lighter;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  color: $outerspace;
+  font-weight: 400;
+}
+
+h3 {
+  color: $oslogray;
+}
+
+h4 {
+  margin-bottom: 0;
+}
+p {
+  margin: 0;
+}
+
+.repo-title, .branch-title {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  all: unset;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  &:hover {
+    color: $apricot;
+    cursor: pointer;
+  }
+}
+
+.repo-btn {
+  font-size: 32px;
+}
+
+.branch-btn {
+  font-size: 24px;
+}
+
+.btn-rotated {
+  transform: rotate(90deg);
+}
+
+.commit-list-frame {
+  border-style: solid;
+  border-width: thin;
+  padding: 0 1rem 1rem 1rem;
+  margin: 0 1rem 1.5rem 1rem;
+  background-color: lighten($iron, 8%);
+}
