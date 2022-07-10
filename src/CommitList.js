@@ -109,7 +109,14 @@ export default function CommitList({ branchname, username, reponame }) {
       }
       <div className="commit-list-frame">
         {commits.map((commit) => {
-          return <Commit key={commit.sha} commit={commit}></Commit>;
+          return (
+            <Commit
+              key={commit.sha}
+              commit={commit}
+              username={username}
+              reponame={reponame}
+            ></Commit>
+          );
         })}
       </div>
     </>
