@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Branch from "./Branch";
 import axios from "axios";
+import paginationSetup from "./utils/paginationSetup";
 
 export default function BranchList({ reponame, username }) {
   const [branches, setBranches] = useState([]);
@@ -28,27 +29,11 @@ export default function BranchList({ reponame, username }) {
         setErrBranches("");
 
         const headerLink = response.headers.link;
-
         if (headerLink) {
-          const paginationLinks = headerLink.split(", ");
-
-          paginationLinks.map((paginationLink) => {
-            console.log(paginationLink);
-
-            const paginationURL = paginationLink
-              .split("; ")[0]
-              .match("<(.*)>")[1];
-            const paginationRel = paginationLink
-              .split("; ")[1]
-              .match('"(.*)"')[1];
-
-            if (paginationRel === "last") {
-              const lastPage = paginationURL.match(/&page=(\d+).*$/)[1];
-              setLastPage(parseInt(lastPage));
-            }
-
-            return null;
-          });
+          const lastPage = paginationSetup(headerLink);
+          if (lastPage) {
+            setLastPage(parseInt(lastPage));
+          }
         }
       })
       .catch((error) => {
@@ -72,7 +57,7 @@ export default function BranchList({ reponame, username }) {
   };
 
   const isLastPage = () => {
-    return currentPage === lastPage;
+    return lastPage && currentPage === lastPage;
   };
 
   useEffect(getBranches, [currentPage, reponame, username]);

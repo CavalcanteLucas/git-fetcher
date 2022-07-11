@@ -75,12 +75,12 @@ input {
   border-radius: 15px;
   border-width: thin;
   height: 2rem;
+  margin-right: 2rem;
 }
 
 input[type="text"] {
   padding-left: 1rem;
   padding-right: 1rem;
-
   background-image: url('./assets/magnifying_glass.png');
   background-position: 10px 10px; 
   background-size: 1rem;
@@ -161,8 +161,8 @@ input[type="text"] {
 }
 
 .loader {
-  border: 6px solid $iron; /* Light grey */
-  border-top: 6px solid $apricot; /* Blue */
+  border: 6px solid $iron;
+  border-top: 6px solid $apricot;
   border-radius: 50%;
   width: 8px;
   height: 8px;

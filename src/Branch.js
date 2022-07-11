@@ -19,7 +19,7 @@ export default function Branch({ branch, username, reponame }) {
       <div className="branch-title">
         <h3>{branch.name}</h3>
         <button className={btnRotatedCls} onClick={handleShowCommits}>
-        ➤
+          ➤
         </button>
       </div>
       {showCommits ? (
