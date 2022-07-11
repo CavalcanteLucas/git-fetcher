@@ -38,7 +38,7 @@ function App() {
           <div className="app-main-msg-frame">
             <h1>Welcome,</h1>
             <h1>this is the Git Fetcher.</h1>
-            <h1>Type a valid git user to start!</h1>
+            <h1>Type a valid GitHub user to start!</h1>
           </div>
         )}
       </div>
